@@ -1,0 +1,7 @@
+Metric,Value
+Accuracy,0.7857142857142857
+F1,0.7622180451127819
+Precision,0.7634920634920636
+Recall,0.7857142857142857
+Any Pain Detection Rate,1.0
+High Pain Detection Rate,0.5714285714285714

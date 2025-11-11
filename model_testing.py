@@ -89,6 +89,26 @@ X_test_final = np.concatenate([face_logits, posture_logits], axis=-1)
 y_pred_probs_final = model.predict(X_test_final)
 y_pred_final = np.argmax(y_pred_probs_final, axis=1)
 
+
+
+# === Save Predictions (numerical + readable form) ===
+# Create a DataFrame of ground-truth vs predicted pain levels
+pred_df = pd.DataFrame({
+    'True_Label': labels,
+    'Predicted_Label': y_pred_final
+})
+
+# Optional: map numeric labels to readable pain levels
+label_map = {0: 'No Pain', 1: 'Low/Moderate Pain', 2: 'High Pain'}
+pred_df['True_Label_Text'] = pred_df['True_Label'].map(label_map)
+pred_df['Predicted_Label_Text'] = pred_df['Predicted_Label'].map(label_map)
+
+# Save to CSV for reference or visualization
+pred_df.to_csv('test_predictions.csv', index=False)
+print("Predictions saved to test_predictions.csv")
+print(pred_df.head(10))  # optional: view first 10 predictions
+
+
 report = classification_report(labels, y_pred_final, zero_division=0)
 report_df = pd.DataFrame(classification_report(labels, y_pred_final, output_dict=True, zero_division=0)).transpose()
 report_df.to_csv('test_classification_report.csv', index=True)
